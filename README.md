@@ -1,7 +1,6 @@
 # Kadence-s-SnakeGame
 This is my snake game that i talked with chatgpt to help me make.
 
-
 #include "raylib.h"
 #include <vector>
 
@@ -28,17 +27,17 @@ bool PlaySnakeGame() {
     bool gameOver = false;
 
     while (!WindowShouldClose() && !gameOver) {
-        // Input
+        
         if (IsKeyPressed(KEY_UP) && dir != DOWN) dir = UP;
         if (IsKeyPressed(KEY_DOWN) && dir != UP) dir = DOWN;
         if (IsKeyPressed(KEY_LEFT) && dir != RIGHT) dir = LEFT;
         if (IsKeyPressed(KEY_RIGHT) && dir != LEFT) dir = RIGHT;
 
-        // Movement every few frames (for speed control)
+        
         if (++frames >= 10) {
             frames = 0;
 
-            // Move snake
+            
             SnakeSegment head = snake[0];
             switch (dir) {
             case UP: head.y--; break;
@@ -47,10 +46,10 @@ bool PlaySnakeGame() {
             case RIGHT: head.x++; break;
             }
 
-            // Insert new head
+            
             snake.insert(snake.begin(), head);
 
-            // Eat food or move normally
+            
             if (head.x == food.x && head.y == food.y) {
                 food = {
                     GetRandomValue(0, screenWidth / cellSize - 1),
@@ -61,13 +60,13 @@ bool PlaySnakeGame() {
                 snake.pop_back();
             }
 
-            // Check collision with wall
+            
             if (head.x < 0 || head.x >= screenWidth / cellSize ||
                 head.y < 0 || head.y >= screenHeight / cellSize) {
                 gameOver = true;
             }
 
-            // Check collision with self
+            
             for (size_t i = 1; i < snake.size(); i++) {
                 if (head.x == snake[i].x && head.y == snake[i].y) {
                     gameOver = true;
@@ -75,14 +74,14 @@ bool PlaySnakeGame() {
             }
         }
 
-        // Draw
+        
         BeginDrawing();
         ClearBackground(DARKGREEN);
 
-        // Draw food
+        
         DrawRectangle(food.x * cellSize, food.y * cellSize, cellSize, cellSize, RED);
 
-        // Draw snake
+       
         for (const auto& segment : snake) {
             DrawRectangle(segment.x * cellSize, segment.y * cellSize, cellSize, cellSize, WHITE);
         }
@@ -90,7 +89,7 @@ bool PlaySnakeGame() {
         EndDrawing();
     }
 
-    return !WindowShouldClose(); // Return true if user didn't close the window
+    return !WindowShouldClose(); 
 }
 
 int main() {
@@ -102,7 +101,7 @@ int main() {
 
         if (!keepPlaying) break;
 
-        // Show Game Over screen
+       
         while (!WindowShouldClose()) {
             BeginDrawing();
             ClearBackground(BLACK);
@@ -113,12 +112,13 @@ int main() {
 
             EndDrawing();
 
-            if (IsKeyPressed(KEY_ENTER)) break;      // Restart game
-            if (IsKeyPressed(KEY_ESCAPE)) goto exit; // Exit game
-        }
+            if (IsKeyPressed(KEY_ENTER)) break;      
+            if (IsKeyPressed(KEY_ESCAPE)) goto exit; 
     }
 
 exit:
     CloseWindow();
     return 0;
 }
+
+
